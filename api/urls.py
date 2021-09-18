@@ -1,9 +1,12 @@
 from django.contrib import admin
 from django.urls import path
-from .views import VehicleView,DiscontinuedView,discontinued_vehicles,single_discontinued_vehicle,Vehicle_Detail
+from .views import DiscontinuedView, VehicleViewNew,discontinued_vehicles,single_discontinued_vehicle,Vehicle_Detail
+
+
+app__name ="iGov"
 
 urlpatterns = [
-    path('',VehicleView.as_view()),
+    path('',VehicleViewNew.as_view()),
 
     #vehicle_detail
     path('<int:pk>/',Vehicle_Detail.as_view()),

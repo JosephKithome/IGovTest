@@ -5,17 +5,29 @@ from .models import Vehicle,Discontinued
 from rest_framework import generics
 
 from rest_framework.decorators import api_view
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
+from rest_framework.generics import GenericAPIView, get_object_or_404
+from rest_framework.mixins import ListModelMixin
+from django.contrib.auth.models import User
 
 # Create your views here.
 
-class VehicleView(generics.ListAPIView):
+# class VehicleView(generics.ListAPIView):
+#     queryset = Vehicle.objects.all()
+#     serializer_class =VehicleSerialiezer
+
+class VehicleViewNew(generics.ListCreateAPIView):
     queryset = Vehicle.objects.all()
-    serializer_class =VehicleSerialiezer
+    serializer_class = VehicleSerialiezer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, *kwargs)
+
 class Vehicle_Detail(generics.RetrieveAPIView):
     queryset = Vehicle.objects.all()
     serializer_class =VehicleSerialiezer
@@ -63,5 +75,6 @@ def single_discontinued_vehicle(request, pk):
     elif request.method == 'DELETE':
         vehicle.delete()
         return HttpResponse(status=204)
+
 
 
